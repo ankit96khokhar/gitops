@@ -4,7 +4,7 @@ metadata:
   name: nginx-team
   namespace: argocd
 spec:
-  description: Nginx team isolated project
+  description: Nginx team project
   sourceRepos:
   - https://github.com/ankit96khokhar/gitops
   destinations:
@@ -15,7 +15,5 @@ spec:
     kind: Rollout
   - group: networking.istio.io
     kind: VirtualService
-  - group: networking.istio.io
-    kind: DestinationRule
   - group: ""
     kind: Service
