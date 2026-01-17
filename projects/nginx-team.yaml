@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: nginx-team
+  namespace: argocd
+spec:
+  description: Nginx team isolated project
+  sourceRepos:
+  - https://github.com/ankit96khokhar/gitops
+  destinations:
+  - namespace: nginx-prod
+    server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+  - group: argoproj.io
+    kind: Rollout
+  - group: networking.istio.io
+    kind: VirtualService
+  - group: networking.istio.io
+    kind: DestinationRule
+  - group: ""
+    kind: Service

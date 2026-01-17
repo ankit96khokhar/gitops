@@ -4,15 +4,10 @@ metadata:
   name: nginx
 spec:
   hosts:
-  - nginx
+  - "*"
+  gateways:
+  - mesh
   http:
-  - name: primary
-    route:
+  - route:
     - destination:
-        host: nginx
-        subset: stable
-      weight: 100
-    - destination:
-        host: nginx
-        subset: canary
-      weight: 0
+        host: nginx-active
