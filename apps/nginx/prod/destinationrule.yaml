@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: nginx
+spec:
+  host: nginx
+  subsets:
+  - name: stable
+    labels:
+      rollouts-pod-template-hash: stable
+  - name: canary
+    labels:
+      rollouts-pod-template-hash: canary

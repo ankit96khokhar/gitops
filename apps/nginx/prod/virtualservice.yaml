@@ -1,20 +1,42 @@
+# apiVersion: networking.istio.io/v1
+# kind: VirtualService
+# metadata:
+#   name: nginx
+# spec:
+#   hosts:
+#   - nginx-active
+#   gateways:
+#   - mesh
+#   http:
+#   - match:
+#     - headers:
+#         x-preview:
+#           exact: "true"
+#     route:
+#     - destination:
+#         host: nginx-preview
+#   - route:
+#     - destination:
+#         host: nginx-active
+
+
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: nginx
 spec:
   hosts:
-  - nginx-active
+  - nginx
   gateways:
   - mesh
   http:
-  - match:
-    - headers:
-        x-preview:
-          exact: "true"
+  - name: default
     route:
     - destination:
-        host: nginx-preview
-  - route:
+        host: nginx
+        subset: stable
+      weight: 100
     - destination:
-        host: nginx-active
+        host: nginx
+        subset: canary
+      weight: 0
