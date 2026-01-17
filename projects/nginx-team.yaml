@@ -17,3 +17,5 @@ spec:
     kind: VirtualService
   - group: ""
     kind: Service
+  - group: networking.istio.io
+    kind: DestinationRule 
