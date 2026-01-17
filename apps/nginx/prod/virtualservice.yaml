@@ -8,6 +8,13 @@ spec:
   gateways:
   - mesh
   http:
+  - match:
+    - headers:
+        x-preview:
+          exact: "true"
+    route:
+    - destination:
+        host: nginx-preview
   - route:
     - destination:
         host: nginx-active
