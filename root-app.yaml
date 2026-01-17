@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_ORG/gitops.git
+    repoURL: https://github.com/ankit96khokhar/gitops.git
     targetRevision: main
     path: clusters/minikube
   destination:
