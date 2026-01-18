@@ -1,4 +1,0 @@
-resources:
-- ../projects/nginx-team.yaml
-- ../namespaces/nginx-prod.yaml
-- ../apps

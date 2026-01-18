@@ -1,2 +1,2 @@
 resources:
-- nginx/prod/app.yaml
+  - nginx/prod

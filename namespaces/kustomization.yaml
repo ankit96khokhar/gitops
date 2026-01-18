@@ -1,0 +1,2 @@
+resources:
+  - nginx-prod.yaml
