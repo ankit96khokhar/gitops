@@ -10,7 +10,11 @@ spec:
   destinations:
   - namespace: nginx-prod
     server: https://kubernetes.default.svc
+  - namespace: argocd              # Add this line for child apps
+    server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
+  - group: argoproj.io
+    kind: Application              # Add this line for App-of-Apps
   - group: argoproj.io
     kind: Rollout
   - group: networking.istio.io
@@ -18,4 +22,10 @@ spec:
   - group: ""
     kind: Service
   - group: networking.istio.io
-    kind: DestinationRule 
+    kind: DestinationRule
+  - group: apps                    # Add common resource types
+    kind: Deployment
+  - group: ""
+    kind: ConfigMap
+  - group: ""
+    kind: Secret
