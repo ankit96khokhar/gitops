@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: redis-operator
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
@@ -21,4 +23,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-

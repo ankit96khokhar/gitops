@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: redis
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
@@ -16,4 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
