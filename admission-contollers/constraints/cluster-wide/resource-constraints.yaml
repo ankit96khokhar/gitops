@@ -1,0 +1,24 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequireResources
+metadata:
+  name: cluster-require-resources
+  labels:
+    environment: "cluster-wide"
+    policy-category: "resource-management"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: 
+      - "kube-system"
+      - "gatekeeper-system"
+  parameters:
+    exemptImages:
+      - "k8s.gcr.io/*"
+      - "gcr.io/gke-release/*"
+      - "gke.gcr.io/*"
+      - "registry.k8s.io/*"
+    requireLimits: true
+    requireRequests: true

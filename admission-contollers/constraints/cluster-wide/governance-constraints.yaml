@@ -1,0 +1,29 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequireLabels
+metadata:
+  name: cluster-require-labels
+  labels:
+    environment: "cluster-wide"
+    policy-category: "governance"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "StatefulSet", "DaemonSet"]
+    excludedNamespaces: 
+      - "kube-system"
+      - "gatekeeper-system"
+  parameters:
+    labels: 
+      - "app"
+      - "team"
+      - "environment"
+    allowedValues:
+      environment:
+        - "dev"
+        - "staging"
+        - "prod"
+        - "test"

@@ -1,0 +1,53 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdenyprivileged
+  labels:
+    policy-version: "v1.0"
+    category: "security"
+    severity: "high"
+    maintained-by: "platform-team"
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDenyPrivileged
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            exemptUsers:
+              type: array
+              items:
+                type: string
+            exemptNamespaces:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdenyprivileged
+
+        violation[{"msg": msg}] {
+          not exempt_user
+          not exempt_namespace
+          container := input.review.object.spec.containers[_]
+          container.securityContext.privileged == true
+          msg := "❌ Privileged containers are not allowed (Platform Security Policy v1.0)"
+        }
+
+        violation[{"msg": msg}] {
+          not exempt_user
+          not exempt_namespace
+          input.review.object.spec.securityContext.privileged == true
+          msg := "❌ Privileged containers are not allowed (Platform Security Policy v1.0)"
+        }
+
+        exempt_user {
+          input.parameters.exemptUsers[_] == input.review.userInfo.username
+        }
+
+        exempt_namespace {
+          input.parameters.exemptNamespaces[_] == input.review.object.metadata.namespace
+        }

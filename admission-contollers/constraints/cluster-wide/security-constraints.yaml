@@ -1,0 +1,22 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDenyPrivileged
+metadata:
+  name: cluster-deny-privileged
+  labels:
+    environment: "cluster-wide"
+    policy-category: "security"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: 
+      - "kube-system"
+      - "gatekeeper-system"
+      - "istio-system"
+  parameters:
+    exemptUsers: 
+      - "system:admin"
+    exemptNamespaces: 
+      - "emergency-break-glass"
