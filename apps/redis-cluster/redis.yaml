@@ -1,0 +1,11 @@
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: my-redis
+  namespace: default
+spec:
+  redis:
+    replicas: 3
+  sentinel:
+    replicas: 3
+

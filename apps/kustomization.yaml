@@ -1,2 +1,4 @@
 resources:
   - nginx/prod
+  - redis-operator
+  - redis-cluster
