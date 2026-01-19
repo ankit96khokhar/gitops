@@ -1,6 +1,5 @@
 resources:
   - namespaces
   - projects
-  - ingress
   - platform
   - apps
