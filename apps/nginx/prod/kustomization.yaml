@@ -6,7 +6,6 @@
 
 
 resources:
-- app.yaml
 - rollout.yaml
 - service.yaml
 - virtualservice.yaml
