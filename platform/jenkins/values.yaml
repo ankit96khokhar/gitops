@@ -1,0 +1,68 @@
+controller:
+  componentName: "jenkins-controller"
+  # Ensures the pod stays alive even if there are minor config issues
+  terminationGracePeriodSeconds: 10
+  
+  # 1. FIX: Disable Setup Wizard (Automated Production Mode)
+  javaOpts: "-Djenkins.install.runSetupWizard=false"
+
+  # 2. FIX: Security Context for Volume Permissions
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+
+  # 3. FIX: Ensure Init Container has resources for Gatekeeper/Platform Policy
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+  # 4. FIX: Sidecar resources (required by your cluster admission controller)
+  sidecars:
+    configAutoReload:
+      enabled: true
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "200m"
+          memory: "256Mi"
+
+  # 5. Plugins (Resolved for 2026 stability)
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - configuration-as-code
+
+  serviceType: NodePort
+  nodePort: 32000
+
+  # 6. JCasC Configuration
+  JCasC:
+    defaultConfig: true
+    configScripts:
+      jenkins-cloud: |
+        jenkins:
+          clouds:
+            - kubernetes:
+                name: "kubernetes"
+                serverUrl: "https://kubernetes.default"
+                namespace: "jenkins"
+                jenkinsUrl: "http://jenkins-jenkins.jenkins.svc.cluster.local:8080"
+                templates:
+                  - name: "default-agent"
+                    label: "dynamic-agent"
+                    containers:
+                      - name: "jnlp"
+                        image: "jenkins/inbound-agent:latest"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
+                        resourceLimitCpu: "500m"
+                        resourceLimitMemory: "512Mi"
+
