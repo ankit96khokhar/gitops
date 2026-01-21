@@ -1,0 +1,16 @@
+server:
+  insecure: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    hosts:
+      - host: argocd.local
+        paths:
+          - /
+
+configs:
+  params:
+    server.insecure: true
+
