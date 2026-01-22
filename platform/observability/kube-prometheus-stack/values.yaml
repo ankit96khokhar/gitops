@@ -38,16 +38,41 @@ prometheusOperator:
   namespaces:
     releaseNamespace: false
 
+# prometheus-node-exporter:
+#   enabled: true
+#   hostNetwork: false
+#   hostPort: false
+#   service:
+#     port: 9100
+#   extraArgs:
+#     - --web.listen-address=:9100
+#   tolerations:
+#     - operator: Exists
+#   resources:
+#     requests:
+#       cpu: 50m
+#       memory: 64Mi
+#     limits:
+#       cpu: 100m
+#       memory: 128Mi
+
 prometheus-node-exporter:
   enabled: true
   hostNetwork: false
   hostPort: false
+
   service:
-    port: 9100
+    port: 9200
+    targetPort: 9200
+
+  containerPort: 9200
+
   extraArgs:
-    - --web.listen-address=:9100
+    - --web.listen-address=:9200
+
   tolerations:
     - operator: Exists
+
   resources:
     requests:
       cpu: 50m
