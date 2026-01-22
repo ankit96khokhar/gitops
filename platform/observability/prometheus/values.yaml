@@ -1,0 +1,5 @@
+server:
+  name: prometheus
+  retention: 6h
+  persistentVolume:
+    enabled: false # Saves disk on Minikube
