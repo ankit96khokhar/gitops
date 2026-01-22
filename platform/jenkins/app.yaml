@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jenkins-server
+  name: jenkins
   namespace: argocd
 spec:
   project: default
   source:
+    repoURL: 'https://charts.jenkins.io' # Official Jenkins Helm Repo
+    targetRevision: 5.8.17              # Specify a stable version
     chart: jenkins
-    repoURL: https://charts.jenkins.io
-    targetRevision: 5.6.0
     helm:
-      valueFiles:
-        - values.yaml
+      values: |
+        controller:
+          serviceType: NodePort          # Better for Minikube access
   destination:
-    server: https://kubernetes.default.svc
-    namespace: jenkins
+    server: 'https://kubernetes.default.svc'
+    namespace: jenkins-ns
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+    createNamespace: true
