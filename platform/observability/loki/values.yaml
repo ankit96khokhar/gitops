@@ -3,18 +3,17 @@ loki:
   commonConfig:
     replication_factor: 1
   storage:
-    type: 'filesystem'
-  
-  # Exposing Loki API for debugging
+    type: filesystem
+
   ingress:
     enabled: true
     ingressClassName: nginx
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - loki.local
-    paths:
-      - /
+      - host: loki.local
+        paths:
+          - /
 
 # Promtail ships the logs to Loki
 promtail:
