@@ -1,0 +1,13 @@
+# Using the Jaeger "all-in-one" for Minikube efficiency
+allInOne:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - jaeger.local
+    path: /
+storage:
+  type: memory # Ephemeral for local testing
