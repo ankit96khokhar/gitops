@@ -25,3 +25,5 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true  # This bypasses the annotation length limit
+      - Replace=true      
+      - CreateNamespace=true
