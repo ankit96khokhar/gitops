@@ -53,3 +53,21 @@ defaultRules:
 prometheusOperator:
   namespaces:
     releaseNamespace: false
+
+# ------------------------------
+# 🔧 FIX: Node Exporter (Minikube)
+# ------------------------------
+prometheus-node-exporter:
+  hostPort:
+    enabled: false
+  service:
+    hostPort: false
+  extraArgs:
+    - --web.listen-address=:9100
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
