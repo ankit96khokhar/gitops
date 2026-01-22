@@ -6,18 +6,19 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.jenkins.io' # Official Jenkins Helm Repo
-    targetRevision: 5.8.17              # Specify a stable version
+    repoURL: 'https://charts.jenkins.io'
+    targetRevision: 5.8.17
     chart: jenkins
     helm:
       values: |
         controller:
-          serviceType: NodePort          # Better for Minikube access
+          serviceType: NodePort
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: jenkins
+    namespace: jenkins  # Argo CD will create this namespace
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    createNamespace: true
+    syncOptions:           # This is where the fix happens
+      - CreateNamespace=true
