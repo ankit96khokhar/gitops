@@ -11,13 +11,16 @@ spec:
       targetRevision: 1.24.0
       helm:
         valueFiles:
-          - $values/platform/istio/base-values.yaml
+          - $values/platform/istio/base-values.yaml # Ensure there is a space after the '-'
     - repoURL: 'https://github.com/ankit96khokhar/gitops'
       targetRevision: main
-      ref: values
+      ref: values # This 'ref' maps to '$values' used above
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: istio-system
   syncPolicy:
-    automated: {prune: true, selfHeal: true}
-    syncOptions: [- CreateNamespace=true]
+    automated: 
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
