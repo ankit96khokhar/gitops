@@ -1,4 +1,5 @@
-# 1. Force the All-In-One strategy (includes the UI and Collector in one pod)
+strategy: allInOne
+
 allInOne:
   enabled: true
   ingress:
@@ -15,18 +16,33 @@ allInOne:
       cpu: 500m
     requests:
       memory: 256Mi
-      cpu: 100m      
+      cpu: 100m
 
-# 2. Explicitly tell the chart NOT to provision sub-charts
-provisionCassandra: false
-provisionElasticsearch: false
+# 🔥 Force memory storage
+storage:
+  type: memory
 
-# 3. Double-down on the sub-chart toggles
+# 🔥 Disable distributed components
+collector:
+  enabled: false
+
+query:
+  enabled: false
+
+agent:
+  enabled: false
+
+# 🔥 Hard-disable subcharts
 cassandra:
   enabled: false
+
 elasticsearch:
   enabled: false
 
-# 4. Set storage to memory
-storage:
-  type: memory
+kafka:
+  enabled: false
+
+# 🔥 Extra safety
+provisionDataStore:
+  cassandra: false
+  elasticsearch: false
