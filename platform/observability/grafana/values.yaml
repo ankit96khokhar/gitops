@@ -1,5 +1,22 @@
 adminPassword: "admin"
+
 service:
-  type: NodePort
+  type: ClusterIP # Changed from NodePort as we are using Ingress
+
 persistence:
-  enabled: false
+  enabled: false # Keep it false for Minikube to save resources
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - grafana.local
+  path: /
+
+# Important for Ingress: Ensures Grafana knows its external URL
+grafana.ini:
+  server:
+    domain: grafana.local
+    root_url: http://grafana.local  
