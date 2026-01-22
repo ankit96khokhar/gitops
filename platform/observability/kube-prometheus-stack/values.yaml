@@ -57,11 +57,10 @@ prometheusOperator:
 # ------------------------------
 # 🔧 FIX: Node Exporter (Minikube)
 # ------------------------------
-prometheus-node-exporter:
-  hostPort:
-    enabled: false
+prometheusNodeExporter:
+  hostPort: false
   service:
-    hostPort: false
+    port: 9100
   extraArgs:
     - --web.listen-address=:9100
   resources:
