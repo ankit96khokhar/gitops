@@ -2,23 +2,27 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: jenkins
-  namespace: argocd
+  namespace: argocd # Must be argocd so the root app can manage it
 spec:
   project: default
-  source:
-    repoURL: 'https://charts.jenkins.io'
-    targetRevision: 5.8.17
-    chart: jenkins
-    helm:
-      values: |
-        controller:
-          serviceType: NodePort
+  sources:
+    # Source 1: The official Helm Chart
+    - repoURL: 'https://charts.jenkins.io'
+      chart: jenkins
+      targetRevision: 5.8.17
+      helm:
+        valueFiles:
+          - $values/platform/jenkins/values.yaml
+    # Source 2: Your Git Repo for the values
+    - repoURL: https://github.com/ankit96khokhar/gitops
+      targetRevision: main
+      ref: values
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: jenkins  # Argo CD will create this namespace
+    namespace: jenkins # Installs Jenkins pods here
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:           # This is where the fix happens
+    syncOptions:
       - CreateNamespace=true

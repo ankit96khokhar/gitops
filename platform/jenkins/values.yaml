@@ -1,27 +1,14 @@
+# platform/jenkins/values.yaml
 controller:
-  adminUser: admin
-  adminPassword: admin123
-
-  image:
-    registry: docker.io
-    repository: jenkins/jenkins
-    tag: 2.479.1-jdk17
-    pullPolicy: Always
-
-  serviceType: ClusterIP
-
-  resources:
-    requests:
-      cpu: "300m"
-      memory: "768Mi"
-    limits:
-      cpu: "1"
-      memory: "1500Mi"
-
+  image: "jenkins/jenkins"
+  tag: "2.541.1-jdk21"
+  serviceType: NodePort
   installPlugins:
-    - kubernetes
-    - workflow-aggregator
-    - git
-    - configuration-as-code
-    - credentials-binding
-    - pipeline-stage-view
+    - git:5.7.0
+    - git-client:6.4.1
+    - configuration-as-code:1963.v24e046127a_3f
+    - kubernetes:4203.v1dd44f5b_1cf9
+    - workflow-aggregator:596.v8c21c963d92d
+persistence:
+  enabled: true
+  size: "5Gi"
