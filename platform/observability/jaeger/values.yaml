@@ -18,3 +18,5 @@ allInOne:
       cpu: 100m      
 storage:
   type: memory # Ephemeral for local testing
+cassandra:
+  enabled: false  
