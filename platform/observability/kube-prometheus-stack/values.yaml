@@ -59,16 +59,12 @@ prometheusOperator:
 prometheus-node-exporter:
   enabled: true
   hostNetwork: false
-  hostPort: false
 
   service:
-    port: 9200
-    targetPort: 9200
-
-  containerPort: 9200
+    port: 9100
 
   extraArgs:
-    - --web.listen-address=:9200
+    - --web.listen-address=:9100
 
   tolerations:
     - operator: Exists
