@@ -1,0 +1,27 @@
+prometheus:
+  prometheusSpec:
+    # Enable ServiceMonitor discovery across all namespaces
+    serviceMonitorSelectorNilUsesHelmValues: false
+    # Resource management for Minikube
+    resources:
+      requests:
+        cpu: 200m
+        memory: 500Mi
+    retention: 1d
+    storageSpec:
+      disableMountSubPath: true
+
+grafana:
+  # Use the same namespace for Istio dashboards
+  namespaceOverride: "istio-system"
+  adminPassword: "admin"
+  service:
+    type: NodePort
+
+# Disable components you might not need immediately to save RAM
+alertmanager:
+  enabled: true
+nodeExporter:
+  enabled: true
+kubeStateMetrics:
+  enabled: true
