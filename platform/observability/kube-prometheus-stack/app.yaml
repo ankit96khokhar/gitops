@@ -1,27 +1,24 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: kube-prometheus-stack
-#   namespace: argocd
-# spec:
-#   project: default
-#   sources:
-#     - repoURL: 'https://prometheus-community.github.io/helm-charts'
-#       chart: kube-prometheus-stack
-#       targetRevision: 67.0.0 # Latest stable as of Jan 2026
-#       helm:
-#         valueFiles:
-#           - $values/platform/observability/kube-prometheus-stack/values.yaml
-#     - repoURL: 'https://github.com/ankit96khokhar/gitops'
-#       targetRevision: main
-#       ref: values
-#   destination:
-#     server: 'https://kubernetes.default.svc'
-#     namespace: istio-system
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true # Important: The Operator has large CRDs
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 58.2.2
+      helm:
+        valueFiles:
+          - $values/platform/observability/kube-prometheus-stack/values.yaml
+    - repoURL: https://github.com/ankit96khokhar/gitops
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

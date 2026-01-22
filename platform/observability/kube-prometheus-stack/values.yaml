@@ -1,27 +1,55 @@
+grafana:
+  enabled: true
+  adminPassword: admin
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.local
+    path: /
+
 prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - prometheus.local
+    paths:
+      - /
   prometheusSpec:
-    # Enable ServiceMonitor discovery across all namespaces
-    serviceMonitorSelectorNilUsesHelmValues: false
-    # Resource management for Minikube
+    retention: 6h
+    storageSpec: {}
     resources:
       requests:
         cpu: 200m
-        memory: 500Mi
-    retention: 1d
-    storageSpec:
-      disableMountSubPath: true
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
 
-grafana:
-  # Use the same namespace for Istio dashboards
-  namespaceOverride: "istio-system"
-  adminPassword: "admin"
-  service:
-    type: NodePort
-
-# Disable components you might not need immediately to save RAM
 alertmanager:
-  enabled: true
-nodeExporter:
-  enabled: true
-kubeStateMetrics:
-  enabled: true
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+defaultRules:
+  create: true
+
+# IMPORTANT: Enable ServiceMonitor discovery across namespaces
+prometheusOperator:
+  namespaces:
+    releaseNamespace: false
