@@ -22,3 +22,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true  # This bypasses the annotation length limit
