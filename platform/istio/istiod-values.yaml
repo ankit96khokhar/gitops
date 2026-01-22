@@ -1,0 +1,5 @@
+meshConfig:
+  accessLogFile: /dev/stdout
+  enableTracing: true
+pilot:
+  autoscaleEnabled: false # Save resources on Minikube
