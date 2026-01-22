@@ -1,14 +1,20 @@
 # platform/jenkins/values.yaml
 controller:
-  image: "jenkins/jenkins"
-  tag: "2.541.1-jdk21"
+  # This must be a map, not a single string
+  image:
+    registry: "docker.io"
+    repository: "jenkins/jenkins"
+    tag: "2.541.1-jdk21"
+  
   serviceType: NodePort
+  
   installPlugins:
     - git:5.7.0
     - git-client:6.4.1
     - configuration-as-code:1963.v24e046127a_3f
     - kubernetes:4203.v1dd44f5b_1cf9
     - workflow-aggregator:596.v8c21c963d92d
+
 persistence:
   enabled: true
   size: "5Gi"
