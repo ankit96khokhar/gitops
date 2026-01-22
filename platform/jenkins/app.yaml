@@ -8,10 +8,10 @@ spec:
   source:
     chart: jenkins
     repoURL: https://charts.jenkins.io
-    targetRevision: 5.1.5 # Pin your version!
+    targetRevision: 5.1.5
     helm:
       valueFiles:
-        - values.yaml # Reads from YOUR Git repo
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: jenkins
@@ -21,4 +21,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
