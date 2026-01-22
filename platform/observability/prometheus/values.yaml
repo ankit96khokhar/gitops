@@ -3,3 +3,14 @@ server:
   retention: 6h
   persistentVolume:
     enabled: false # Saves disk on Minikube
+  ingress:
+    enabled: true
+    # This specifies the IngressClass created by the minikube addon
+    ingressClassName: nginx 
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - prometheus.local # You can name this anything you like
+    paths:
+      - /
+    pathType: Prefix    
