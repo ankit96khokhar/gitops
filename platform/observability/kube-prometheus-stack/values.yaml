@@ -38,8 +38,7 @@ prometheusOperator:
   namespaces:
     releaseNamespace: false
 
-# 🚨 HARD FIX for Node Exporter
-prometheusNodeExporter:
+prometheus-node-exporter:
   enabled: true
   hostNetwork: false
   hostPort: false
@@ -47,6 +46,15 @@ prometheusNodeExporter:
     port: 9100
   extraArgs:
     - --web.listen-address=:9100
+  tolerations:
+    - operator: Exists
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
 
 alertmanager:
   enabled: false
