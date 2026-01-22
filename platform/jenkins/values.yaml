@@ -5,7 +5,7 @@ controller:
   image:
     registry: docker.io
     repository: jenkins/jenkins
-    tag: lts-jdk11   # smaller & more stable
+    tag: lts-jdk17   # modern, compatible with new plugins
 
   serviceType: ClusterIP
 
