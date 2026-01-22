@@ -1,4 +1,4 @@
-# Using the Jaeger "all-in-one" for Minikube efficiency
+# 1. Force the All-In-One strategy (includes the UI and Collector in one pod)
 allInOne:
   enabled: true
   ingress:
@@ -16,7 +16,17 @@ allInOne:
     requests:
       memory: 256Mi
       cpu: 100m      
-storage:
-  type: memory # Ephemeral for local testing
+
+# 2. Explicitly tell the chart NOT to provision sub-charts
+provisionCassandra: false
+provisionElasticsearch: false
+
+# 3. Double-down on the sub-chart toggles
 cassandra:
-  enabled: false  
+  enabled: false
+elasticsearch:
+  enabled: false
+
+# 4. Set storage to memory
+storage:
+  type: memory
