@@ -59,12 +59,12 @@ prometheusOperator:
 prometheus-node-exporter:
   enabled: true
   hostNetwork: false
-
+  hostPort: 9101        # Move the hostPort away from 9100 just in case
   service:
     port: 9100
-
+    targetPort: 9101    # Map internal container port to 9101
   extraArgs:
-    - --web.listen-address=:9100
+    - --web.listen-address=:9101
 
   tolerations:
     - operator: Exists
