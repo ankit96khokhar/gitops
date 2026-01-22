@@ -2,15 +2,20 @@ controller:
   adminUser: admin
   adminPassword: admin123
 
+  image:
+    registry: docker.io
+    repository: jenkins/jenkins
+    tag: lts-jdk11   # smaller & more stable
+
   serviceType: ClusterIP
 
   resources:
     requests:
-      cpu: "500m"
-      memory: "1Gi"
+      cpu: "300m"
+      memory: "768Mi"
     limits:
       cpu: "1"
-      memory: "2Gi"
+      memory: "1500Mi"
 
   installPlugins:
     - kubernetes
