@@ -1,3 +1,12 @@
+# ------------------------------
+# 🌐 Global Settings
+# ------------------------------
+global:
+  imagePullSecrets: []
+
+# ------------------------------
+# 📊 Grafana Configuration
+# ------------------------------
 grafana:
   enabled: true
   adminPassword: admin
@@ -9,7 +18,13 @@ grafana:
     hosts:
       - grafana.local
     path: /
+  nodeSelector:
+    kubernetes.io/arch: arm64
+    kubernetes.io/os: linux
 
+# ------------------------------
+# 🚀 Prometheus Configuration
+# ------------------------------
 prometheus:
   ingress:
     enabled: true
@@ -23,6 +38,10 @@ prometheus:
   prometheusSpec:
     retention: 6h
     storageSpec: {}
+    # Ensure it schedules on your ARM nodes
+    nodeSelector:
+      kubernetes.io/arch: arm64
+      kubernetes.io/os: linux
     resources:
       requests:
         cpu: 200m
@@ -31,6 +50,40 @@ prometheus:
         cpu: 500m
         memory: 1Gi
 
+# ------------------------------
+# 🔧 Prometheus Operator
+# ------------------------------
+prometheusOperator:
+  namespaces:
+    releaseNamespace: false
+  nodeSelector:
+    kubernetes.io/arch: arm64
+    kubernetes.io/os: linux
+  # Allows operator to run on the control-plane node
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+
+# ------------------------------
+# 🛠️ Node Exporter (The Port 9100 Fix)
+# ------------------------------
+prometheusNodeExporter:
+  enabled: true
+  hostNetwork: false   # Prevents conflict with host port 9100
+  hostPort: false      # Ensures it doesn't try to bind to the node's IP
+  service:
+    port: 9100
+    targetPort: 9100
+  extraArgs:
+    - --web.listen-address=:9100
+  nodeSelector:
+    kubernetes.io/arch: arm64
+    kubernetes.io/os: linux
+
+# ------------------------------
+# 🚫 Disabled Components
+# ------------------------------
 alertmanager:
   enabled: false
 
@@ -48,25 +101,3 @@ kubeProxy:
 
 defaultRules:
   create: true
-
-# IMPORTANT: Enable ServiceMonitor discovery across namespaces
-prometheusOperator:
-  namespaces:
-    releaseNamespace: false
-
-# ------------------------------
-# 🔧 FIX: Node Exporter (Minikube)
-# ------------------------------
-prometheusNodeExporter:
-  hostPort: false
-  service:
-    port: 9100
-  extraArgs:
-    - --web.listen-address=:9100
-  resources:
-    requests:
-      cpu: 50m
-      memory: 64Mi
-    limits:
-      cpu: 100m
-      memory: 128Mi
