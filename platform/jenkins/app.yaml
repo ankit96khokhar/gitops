@@ -15,7 +15,7 @@ spec:
           serviceType: NodePort          # Better for Minikube access
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: jenkins-ns
+    namespace: jenkins
   syncPolicy:
     automated:
       prune: true
