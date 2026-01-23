@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/ankit96khokhar/gitops
     targetRevision: main
-    path: platform
+    path: apps
     directory:
       recurse: true
   destination:
