@@ -1,9 +1,10 @@
-apiVersion: networking.istio.io/v1
+apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: nginx
+  namespace: nginx-prod
 spec:
-  host: nginx
+  host: nginx.nginx-prod.svc.cluster.local
   subsets:
   - name: stable
     labels:

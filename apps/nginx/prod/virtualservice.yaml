@@ -1,42 +1,23 @@
-# apiVersion: networking.istio.io/v1
-# kind: VirtualService
-# metadata:
-#   name: nginx
-# spec:
-#   hosts:
-#   - nginx-active
-#   gateways:
-#   - mesh
-#   http:
-#   - match:
-#     - headers:
-#         x-preview:
-#           exact: "true"
-#     route:
-#     - destination:
-#         host: nginx-preview
-#   - route:
-#     - destination:
-#         host: nginx-active
-
-
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: nginx
+  namespace: nginx-prod
 spec:
   hosts:
-  - nginx
+  - app.example.com
+  - nginx.nginx-prod.svc.cluster.local  
   gateways:
+  - nginx-prod-gateway
   - mesh
   http:
   - name: default
     route:
     - destination:
-        host: nginx
+        host: nginx.nginx-prod.svc.cluster.local
         subset: stable
       weight: 100
     - destination:
-        host: nginx
+        host: nginx.nginx-prod.svc.cluster.local
         subset: canary
       weight: 0
