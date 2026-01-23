@@ -29,3 +29,7 @@ spec:
     kind: ConfigMap
   - group: ""
     kind: Secret
+  
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace
