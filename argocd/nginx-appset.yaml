@@ -5,16 +5,17 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - git:
-        repoURL: https://github.com/ankit96khokhar/gitops
-        revision: main
-        directories: 
-          - path: apps_final/*
-
-    - list:
-        elements:
-          - env: dev
-          - env: prod
+  - matrix:
+      generators:
+      - git:
+          repoURL: https://github.com/ankit96khokhar/gitops
+          revision: main
+          directories:
+            - path: apps_final/*
+      - list:
+          elements:
+            - env: dev
+            - env: prod
 
   template:
     metadata:
