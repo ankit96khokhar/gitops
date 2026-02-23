@@ -1,17 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: nginx-fleet
+  name: customer-fleet
   namespace: argocd
 spec:
   generators:
   - matrix:
       generators:
+
+      # Detect ONLY valid microservices (base must exist)
       - git:
           repoURL: https://github.com/ankit96khokhar/gitops
           revision: main
-          directories:
-            - path: apps_final/*/*
+          files:
+            - path: apps_final/*/*/base/kustomization.yaml
+
+      # Environment matrix
       - list:
           elements:
             - env: dev
@@ -20,12 +24,14 @@ spec:
   template:
     metadata:
       name: '{{path.segments[1]}}-{{env}}-{{path.segments[2]}}'
+
     spec:
       project: default
+
       source:
         repoURL: https://github.com/ankit96khokhar/gitops
         targetRevision: main
-        path: '{{path}}/overlays/{{env}}'
+        path: 'apps_final/{{path.segments[1]}}/{{path.segments[2]}}/overlays/{{env}}'
 
       destination:
         server: https://kubernetes.default.svc
