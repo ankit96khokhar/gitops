@@ -11,7 +11,7 @@ spec:
           repoURL: https://github.com/ankit96khokhar/gitops
           revision: main
           directories:
-            - path: apps_final/*
+            - path: apps_final/*/*
       - list:
           elements:
             - env: dev
