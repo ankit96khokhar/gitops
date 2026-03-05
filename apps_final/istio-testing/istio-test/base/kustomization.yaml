@@ -1,2 +1,4 @@
 resources:
 - test.yaml
+- gateway.yaml
+- virtualservice.yaml
