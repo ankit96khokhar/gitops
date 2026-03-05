@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: productpage
+  namespace: istio-testing-prod
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - prod-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: prod-productpage
+        port:
+          number: 9080
