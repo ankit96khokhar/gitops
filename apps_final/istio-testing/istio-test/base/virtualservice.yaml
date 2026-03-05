@@ -14,6 +14,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: prod-productpage
+        host: prod-prod-productpage
         port:
           number: 9080
