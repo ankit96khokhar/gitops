@@ -1,7 +1,7 @@
-resources:
-- ../../base
+# resources:
+# - ../../base
 
-namePrefix: dev-
+# namePrefix: dev-
 
-commonLabels:
-  env: dev
+# commonLabels:
+#   env: dev
