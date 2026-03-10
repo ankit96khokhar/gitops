@@ -7,13 +7,13 @@ spec:
   hosts:
   - "localhost"
   gateways:
-  - istio-testing-prod/prod-gateway
+  - gateway
   http:
   - match:
     - uri:
         prefix: /
     route:
     - destination:
-        host: prod-productpage
+        host: productpage
         port:
           number: 9080
