@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: prod-gateway
+  name: gateway
   namespace: istio-testing-prod
 spec:
   selector:
