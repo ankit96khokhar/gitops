@@ -5,9 +5,9 @@ metadata:
   namespace: istio-testing-prod
 spec:
   hosts:
-  - "*"
+  - "localhost"
   gateways:
-  - prod-gateway
+  - istio-testing-prod/prod-gateway
   http:
   - match:
     - uri:
