@@ -14,6 +14,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: productpage
+        host: productpage.istio-testing-prod.svc.cluster.local
         port:
           number: 9080
